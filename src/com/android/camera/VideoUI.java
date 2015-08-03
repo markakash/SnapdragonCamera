@@ -280,8 +280,8 @@ public class VideoUI implements PieRenderer.PieListener,
         });
 
         initializeMiscControls();
-        initializeControlByIntent();
         initializeOverlay();
+        initializeControlByIntent();
         initializePauseButton();
 
         mCameraControls = (CameraControls) mRootView.findViewById(R.id.camera_controls);
