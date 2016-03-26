@@ -2628,7 +2628,7 @@ public class PhotoModule
                     R.array.pref_camera_focusmode_default_array);
             mFocusManager = new FocusOverlayManager(mPreferences, defaultFocusModes,
                     mInitialParams, this, mMirror,
-                    mActivity.getMainLooper(), mUI);
+                    mActivity.getMainLooper(), mUI, mActivity);
         }
     }
 
