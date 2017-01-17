@@ -1509,6 +1509,10 @@ public class CameraActivity extends Activity
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+
+        final boolean useHal3 = getResources().getBoolean(R.bool.config_use_hal3);
+        CameraManagerFactory.getAndroidCameraManager().setHal3(useHal3);
+
         // Check if this is in the secure camera mode.
         Intent intent = getIntent();
         String action = intent.getAction();

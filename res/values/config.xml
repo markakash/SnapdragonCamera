@@ -27,4 +27,7 @@
     <!-- This value may be changed to true to enable the warped pano preview overlayed on top
          of the fullscreen pano preview. -->
     <bool name="enable_warped_pano_preview">true</bool>
+
+    <!-- Enable HAL3 by default -->
+    <bool name="config_use_hal3">false</bool>
 </resources>
