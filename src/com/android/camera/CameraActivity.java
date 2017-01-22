@@ -218,6 +218,7 @@ public class CameraActivity extends Activity
     private View mCameraVideoModuleRootView;
     private View mCameraPanoModuleRootView;
     private View mCameraCaptureModuleRootView;
+    private GridView mCameraGridView;
     private View mMultiCameraModuleRootView;
     private FilmStripView mFilmStripView;
     private ProgressBar mBottomProgress;
@@ -262,6 +263,8 @@ public class CameraActivity extends Activity
     private Intent mImageShareIntent;
     public static int SETTING_LIST_WIDTH_1 = 250;
     public static int SETTING_LIST_WIDTH_2 = 250;
+
+    private boolean mGridEnabled;
 
     private ImageView mThumbnail;
     private UpdateThumbnailTask mUpdateThumbnailTask;
@@ -1554,6 +1557,7 @@ public class CameraActivity extends Activity
         mCameraVideoModuleRootView = rootLayout.findViewById(R.id.camera_video_root);
         mCameraPanoModuleRootView = rootLayout.findViewById(R.id.camera_pano_root);
         mCameraCaptureModuleRootView = rootLayout.findViewById(R.id.camera_capture_root);
+        mCameraGridView = (GridView) rootLayout.findViewById(R.id.grid_lines);
         mMultiCameraModuleRootView = rootLayout.findViewById(R.id.multi_camera_root);
 
         int moduleIndex = -1;
@@ -2514,5 +2518,28 @@ public class CameraActivity extends Activity
             CameraUtil.showErrorAndFinish(CameraActivity.this,
                     R.string.cannot_connect_camera);
         }
+    }
+
+    protected void showGrid(ComboPreferences prefs) {
+        final String value = prefs.getString(CameraSettings.KEY_GRID,
+                getResources().getString(R.string.pref_grid_default));
+        mGridEnabled = value.equals("on");
+        if (mGridEnabled) {
+            mCameraGridView.setVisibility(View.VISIBLE);
+        } else {
+            mCameraGridView.setVisibility(View.GONE);
+        }
+    }
+
+    protected GridView getGridView() {
+        return mCameraGridView;
+    }
+
+    public boolean isGridEnabled() {
+        return mGridEnabled;
+    }
+
+    public void setGridVisibility(int visibility) {
+        mCameraGridView.setVisibility(visibility);
     }
 }

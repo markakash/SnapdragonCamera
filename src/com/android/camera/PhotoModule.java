@@ -593,6 +593,8 @@ public class PhotoModule
         mLocationManager = new LocationManager(mActivity, this);
         mSensorManager = (SensorManager)(mActivity.getSystemService(Context.SENSOR_SERVICE));
 
+        mUI.getCameraControls().setCameraActivity(mActivity);
+
         brightnessProgressBar = (ProgressBar)mRootView.findViewById(R.id.progress);
         mBlurDegreeProgressBar = (SeekBar)mRootView.findViewById(R.id.blur_degree_bar);
         mBlurDegreeProgressBar.setOnSeekBarChangeListener(mBlurDegreeListener);
@@ -609,6 +611,8 @@ public class PhotoModule
         brightnessProgressBar.setVisibility(View.INVISIBLE);
         Storage.setSaveSDCard(
             mPreferences.getString(CameraSettings.KEY_CAMERA_SAVEPATH, "0").equals("1"));
+
+        mActivity.showGrid(mPreferences);
     }
 
     private void initializeControlByIntent() {
@@ -2609,6 +2613,7 @@ public class PhotoModule
             s.setListener(null);
         }
         mUI.removeDisplayChangeListener();
+        mActivity.showGrid(mPreferences);
     }
 
     /**
@@ -4795,6 +4800,7 @@ public class PhotoModule
             mHandler.sendEmptyMessage(SET_PHOTO_UI_PARAMS);
         }
         resizeForPreviewAspectRatio();
+        mActivity.showGrid(mPreferences);
     }
 
     @Override
