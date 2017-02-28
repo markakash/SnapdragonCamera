@@ -25,4 +25,9 @@
          Example: 50 instead of ISO50 -->
     <bool name="iso_values_use_numbers">false</bool>
 
+    <!-- Support for an absolute sharpness value
+    Setting this to true will pass the configured
+    sharpness value to the HAL. -->
+    <bool name="config_use_absolute_sharpness">true</bool>
+
 </resources>
