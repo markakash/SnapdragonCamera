@@ -4465,7 +4465,9 @@ public class CaptureModule implements CameraModule, PhotoController,
                 setUpVideoCaptureRequestBuilder(mVideoRequestBuilder, cameraId);
                 int deviceSocId = mSettingsManager.getDeviceSocId();
                 if (deviceSocId == SettingsManager.TALOS_SOCID ||
-                        deviceSocId == SettingsManager.MOOREA_SOCID) {
+                        deviceSocId == SettingsManager.MOOREA_SOCID ||
+                        deviceSocId == SettingsManager.SAIPAN_SOCID ||
+                        deviceSocId == SettingsManager.SM6250_SOCID) {
                     List list = CameraUtil
                             .createHighSpeedRequestList(mVideoRequestBuilder.build());
                     mCurrentSession.setRepeatingBurst(list,mCaptureCallback, mCameraHandler);
@@ -5500,12 +5502,12 @@ public class CaptureModule implements CameraModule, PhotoController,
         if (mCaptureTimeLapse) {
             size = CameraSettings.getTimeLapseQualityFor(size);
         }
-
         Bundle myExtras = intent.getExtras();
 
         if (mMediaRecorder == null) mMediaRecorder = new MediaRecorder();
 
         updateHFRSetting();
+        mHighSpeedCapture = mHighSpeedCapture && (myExtras == null); //MMS not support high speed
         boolean hfr = mHighSpeedCapture && !mHighSpeedRecordingMode;
 
         if (CamcorderProfile.hasProfile(cameraId, size)) {
@@ -5638,7 +5640,6 @@ public class CaptureModule implements CameraModule, PhotoController,
         if (requestedSizeLimit > 0 && requestedSizeLimit < maxFileSize) {
             maxFileSize = requestedSizeLimit;
         }
-
         if (Storage.isSaveSDCard() && maxFileSize > SDCARD_SIZE_LIMIT) {
             maxFileSize = SDCARD_SIZE_LIMIT;
         }
