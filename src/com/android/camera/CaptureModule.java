@@ -1876,7 +1876,8 @@ public class CaptureModule implements CameraModule, PhotoController,
         if (myExtras != null) {
             mSaveUri = (Uri) myExtras.getParcelable(MediaStore.EXTRA_OUTPUT);
             mCropValue = myExtras.getString("crop");
-            mUseFrontCamera = myExtras.getBoolean("android.intent.extra.USE_FRONT_CAMERA", false);
+            mUseFrontCamera = myExtras.getBoolean("android.intent.extra.USE_FRONT_CAMERA", false) ||
+                    myExtras.getBoolean("com.google.assistant.extra.USE_FRONT_CAMERA", false);
             mTimer = myExtras.getInt("android.intent.extra.TIMER_DURATION_SECONDS", 0);
             Log.d(TAG, "mUseFrontCamera :" + mUseFrontCamera + ", mTimer :" + mTimer);
         }
@@ -4000,7 +4001,8 @@ public class CaptureModule implements CameraModule, PhotoController,
         if (scene == null) return false;
         int mode = Integer.parseInt(scene);
         if (mode != CaptureRequest.CONTROL_SCENE_MODE_DISABLED
-                && mode < SettingsManager.SCENE_MODE_CUSTOM_START)
+                && mode < SettingsManager.SCENE_MODE_CUSTOM_START
+                && mode != SettingsManager.SCENE_MODE_HDR_INT)
             return true;
         return false;
     }
@@ -6086,6 +6088,7 @@ public class CaptureModule implements CameraModule, PhotoController,
             int colorTempValue = Integer.parseInt(pref.getString(
                     SettingsManager.KEY_MANUAL_WB_TEMPERATURE_VALUE, "-1"));
             if (colorTempValue != -1) {
+                request.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_OFF);
                 VendorTagUtil.setWbColorTemperatureValue(request, colorTempValue);
             }
         } else if (manualWBMode.equals(gainMode)) {
